@@ -51,6 +51,15 @@ The image is a multi-stage build (Maven + Temurin 21 to build, Temurin 21 JRE to
 - OpenAPI JSON: <http://localhost:8080/v3/api-docs>
 - Postman: import `postman/FreightFox_Transporter.postman_collection.json` and set `baseUrl` (default `http://localhost:8080`). Run it against a freshly started server so that the first request (no data yet, 409) behaves as expected.
 
+## Live demo
+
+- Swagger UI: https://transporter-assignment-7707.onrender.com/swagger-ui.html
+- OpenAPI JSON: https://transporter-assignment-7707.onrender.com/v3/api-docs
+- API base URL: https://transporter-assignment-7707.onrender.com
+- Quick check: call `POST /api/v1/transporters/input` first, then `POST /api/v1/transporters/assignment`.
+
+> Hosted on Render's free tier: the first request after inactivity can take 30–60 seconds. Data is stored in memory, so it is lost on restart.
+
 ## Endpoints
 
 ### `POST /api/v1/transporters/input`

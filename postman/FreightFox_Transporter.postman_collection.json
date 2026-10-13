@@ -1,0 +1,943 @@
+{
+  "info": {
+    "name": "FreightFox Transporter Assignment",
+    "description": "Transporter Assignment on Lanes API. Run folders in order against a freshly started server (the \"No data\" request only returns 409 before any input has been submitted).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "0. No data submitted",
+      "item": [
+        {
+          "name": "Assignment before any input -> 409",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });",
+                  "pm.test(\"message\", () => pm.expect(pm.response.json().message).to.eql(\"No input data submitted. Call /api/v1/transporters/input first.\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxTransporters\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/assignment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "assignment"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Excel 9-lane dataset",
+      "item": [
+        {
+          "name": "Submit 9-lane input",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"saved\", () => pm.expect(pm.response.json().message).to.eql(\"Input data saved successfully.\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [\n    {\n      \"id\": 1,\n      \"origin\": \"Lane 1 Origin\",\n      \"destination\": \"Lane 1 Destination\"\n    },\n    {\n      \"id\": 2,\n      \"origin\": \"Lane 2 Origin\",\n      \"destination\": \"Lane 2 Destination\"\n    },\n    {\n      \"id\": 3,\n      \"origin\": \"Lane 3 Origin\",\n      \"destination\": \"Lane 3 Destination\"\n    },\n    {\n      \"id\": 4,\n      \"origin\": \"Lane 4 Origin\",\n      \"destination\": \"Lane 4 Destination\"\n    },\n    {\n      \"id\": 5,\n      \"origin\": \"Lane 5 Origin\",\n      \"destination\": \"Lane 5 Destination\"\n    },\n    {\n      \"id\": 6,\n      \"origin\": \"Lane 6 Origin\",\n      \"destination\": \"Lane 6 Destination\"\n    },\n    {\n      \"id\": 7,\n      \"origin\": \"Lane 7 Origin\",\n      \"destination\": \"Lane 7 Destination\"\n    },\n    {\n      \"id\": 8,\n      \"origin\": \"Lane 8 Origin\",\n      \"destination\": \"Lane 8 Destination\"\n    },\n    {\n      \"id\": 9,\n      \"origin\": \"Lane 9 Origin\",\n      \"destination\": \"Lane 9 Destination\"\n    }\n  ],\n  \"transporters\": [\n    {\n      \"id\": 1,\n      \"name\": \"T1\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 20835\n        },\n        {\n          \"laneId\": 2,\n          \"quote\": 10512\n        },\n        {\n          \"laneId\": 3,\n          \"quote\": 22105\n        },\n        {\n          \"laneId\": 4,\n          \"quote\": 42481\n        },\n        {\n          \"laneId\": 5,\n          \"quote\": 19862\n        },\n        {\n          \"laneId\": 6,\n          \"quote\": 13567\n        },\n        {\n          \"laneId\": 7,\n          \"quote\": 10015\n        },\n        {\n          \"laneId\": 8,\n          \"quote\": 17886\n        },\n        {\n          \"laneId\": 9,\n          \"quote\": 43996\n        }\n      ]\n    },\n    {\n      \"id\": 2,\n      \"name\": \"T2\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 48844\n        },\n        {\n          \"laneId\": 2,\n          \"quote\": 31326\n        },\n        {\n          \"laneId\": 3,\n          \"quote\": 18640\n        },\n        {\n          \"laneId\": 4,\n          \"quote\": 45828\n        },\n        {\n          \"laneId\": 5,\n          \"quote\": 18297\n        },\n        {\n          \"laneId\": 6,\n          \"quote\": 45810\n        },\n        {\n          \"laneId\": 7,\n          \"quote\": 49573\n        },\n        {\n          \"laneId\": 8,\n          \"quote\": 45122\n        },\n        {\n          \"laneId\": 9,\n          \"quote\": 31856\n        }\n      ]\n    },\n    {\n      \"id\": 3,\n      \"name\": \"T3\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 39020\n        },\n        {\n          \"laneId\": 2,\n          \"quote\": 20648\n        },\n        {\n          \"laneId\": 3,\n          \"quote\": 31438\n        },\n        {\n          \"laneId\": 4,\n          \"quote\": 36447\n        },\n        {\n          \"laneId\": 5,\n          \"quote\": 12789\n        },\n        {\n          \"laneId\": 6,\n          \"quote\": 49985\n        },\n        {\n          \"laneId\": 7,\n          \"quote\": 35285\n        },\n        {\n          \"laneId\": 8,\n          \"quote\": 10281\n        },\n        {\n          \"laneId\": 9,\n          \"quote\": 40092\n        }\n      ]\n    },\n    {\n      \"id\": 4,\n      \"name\": \"T4\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 14400\n        },\n        {\n          \"laneId\": 2,\n          \"quote\": 44514\n        },\n        {\n          \"laneId\": 3,\n          \"quote\": 14316\n        },\n        {\n          \"laneId\": 4,\n          \"quote\": 10678\n        },\n        {\n          \"laneId\": 5,\n          \"quote\": 13032\n        },\n        {\n          \"laneId\": 6,\n          \"quote\": 46024\n        },\n        {\n          \"laneId\": 7,\n          \"quote\": 42342\n        },\n        {\n          \"laneId\": 8,\n          \"quote\": 35742\n        },\n        {\n          \"laneId\": 9,\n          \"quote\": 48921\n        }\n      ]\n    },\n    {\n      \"id\": 5,\n      \"name\": \"T5\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 11601\n        },\n        {\n          \"laneId\": 2,\n          \"quote\": 19760\n        },\n        {\n          \"laneId\": 3,\n          \"quote\": 40870\n        },\n        {\n          \"laneId\": 4,\n          \"quote\": 20635\n        },\n        {\n          \"laneId\": 5,\n          \"quote\": 26421\n        },\n        {\n          \"laneId\": 6,\n          \"quote\": 28809\n        },\n        {\n          \"laneId\": 7,\n          \"quote\": 27815\n        },\n        {\n          \"laneId\": 8,\n          \"quote\": 17024\n        },\n        {\n          \"laneId\": 9,\n          \"quote\": 44691\n        }\n      ]\n    },\n    {\n      \"id\": 6,\n      \"name\": \"T6\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 35095\n        },\n        {\n          \"laneId\": 2,\n          \"quote\": 12494\n        },\n        {\n          \"laneId\": 3,\n          \"quote\": 17808\n        },\n        {\n          \"laneId\": 4,\n          \"quote\": 36210\n        },\n        {\n          \"laneId\": 5,\n          \"quote\": 39444\n        },\n        {\n          \"laneId\": 6,\n          \"quote\": 29948\n        },\n        {\n          \"laneId\": 7,\n          \"quote\": 17320\n        },\n        {\n          \"laneId\": 8,\n          \"quote\": 10492\n        },\n        {\n          \"laneId\": 9,\n          \"quote\": 37864\n        }\n      ]\n    },\n    {\n      \"id\": 7,\n      \"name\": \"T7\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 26070\n        },\n        {\n          \"laneId\": 2,\n          \"quote\": 41098\n        },\n        {\n          \"laneId\": 3,\n          \"quote\": 20932\n        },\n        {\n          \"laneId\": 4,\n          \"quote\": 16897\n        },\n        {\n          \"laneId\": 5,\n          \"quote\": 27938\n        },\n        {\n          \"laneId\": 6,\n          \"quote\": 43517\n        },\n        {\n          \"laneId\": 7,\n          \"quote\": 25881\n        },\n        {\n          \"laneId\": 8,\n          \"quote\": 46136\n        },\n        {\n          \"laneId\": 9,\n          \"quote\": 31286\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Assignment K=1 -> 201259",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"totalCost is 201259\", () => pm.expect(pm.response.json().totalCost).to.eql(201259));",
+                  "pm.test(\"selected [1]\", () => pm.expect(pm.response.json().selectedTransporters).to.eql([1]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxTransporters\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/assignment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "assignment"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Assignment K=2 -> 148402",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"totalCost is 148402\", () => pm.expect(pm.response.json().totalCost).to.eql(148402));",
+                  "pm.test(\"selected [1,4]\", () => pm.expect(pm.response.json().selectedTransporters).to.eql([1,4]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxTransporters\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/assignment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "assignment"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Assignment K=3 -> 134876",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"totalCost is 134876\", () => pm.expect(pm.response.json().totalCost).to.eql(134876));",
+                  "pm.test(\"selected [1,4,6]\", () => pm.expect(pm.response.json().selectedTransporters).to.eql([1,4,6]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxTransporters\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/assignment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "assignment"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Assignment K=4 -> 127844",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"totalCost is 127844\", () => pm.expect(pm.response.json().totalCost).to.eql(127844));",
+                  "pm.test(\"selected [1,3,4,7]\", () => pm.expect(pm.response.json().selectedTransporters).to.eql([1,3,4,7]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxTransporters\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/assignment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "assignment"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Assignment K=5 -> 125045",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"totalCost is 125045\", () => pm.expect(pm.response.json().totalCost).to.eql(125045));",
+                  "pm.test(\"selected [1,3,4,5,7]\", () => pm.expect(pm.response.json().selectedTransporters).to.eql([1,3,4,5,7]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxTransporters\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/assignment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "assignment"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. PDF Test Case 2",
+      "item": [
+        {
+          "name": "Submit Test Case 2 input",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [\n    {\n      \"id\": 1,\n      \"origin\": \"Chandigarh\",\n      \"destination\": \"Shimla\"\n    },\n    {\n      \"id\": 2,\n      \"origin\": \"Agra\",\n      \"destination\": \"Kanpur\"\n    },\n    {\n      \"id\": 3,\n      \"origin\": \"Varanasi\",\n      \"destination\": \"Gorakhpur\"\n    },\n    {\n      \"id\": 4,\n      \"origin\": \"Amritsar\",\n      \"destination\": \"Ludhiana\"\n    },\n    {\n      \"id\": 5,\n      \"origin\": \"Coimbatore\",\n      \"destination\": \"Madurai\"\n    }\n  ],\n  \"transporters\": [\n    {\n      \"id\": 1,\n      \"name\": \"Transporter X\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 1000\n        },\n        {\n          \"laneId\": 2,\n          \"quote\": 1500\n        }\n      ]\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Transporter Y\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 3,\n          \"quote\": 2000\n        },\n        {\n          \"laneId\": 4,\n          \"quote\": 1800\n        }\n      ]\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Transporter Z\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 5,\n          \"quote\": 1200\n        }\n      ]\n    },\n    {\n      \"id\": 4,\n      \"name\": \"Transporter W\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 1100\n        },\n        {\n          \"laneId\": 4,\n          \"quote\": 1750\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Assignment K=2 -> 422 infeasible",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 422\", () => pm.response.to.have.status(422));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });",
+                  "pm.test(\"message\", () => pm.expect(pm.response.json().message).to.eql(\"Cannot cover all lanes with 2 transporters (minimum required: 3)\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxTransporters\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/assignment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "assignment"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Assignment K=3 -> 7500",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"totalCost is 7500\", () => pm.expect(pm.response.json().totalCost).to.eql(7500));",
+                  "pm.test(\"selected [1,2,3]\", () => pm.expect(pm.response.json().selectedTransporters).to.eql([1,2,3]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxTransporters\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/assignment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "assignment"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Validation errors",
+      "item": [
+        {
+          "name": "Empty lanes and transporters -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [],\n  \"transporters\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Blank origin -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [\n    {\n      \"id\": 1,\n      \"origin\": \" \",\n      \"destination\": \"Delhi\"\n    }\n  ],\n  \"transporters\": [\n    {\n      \"id\": 1,\n      \"name\": \"Transporter T1\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 100\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Non-positive quote -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [\n    {\n      \"id\": 1,\n      \"origin\": \"Mumbai\",\n      \"destination\": \"Delhi\"\n    }\n  ],\n  \"transporters\": [\n    {\n      \"id\": 1,\n      \"name\": \"Transporter T1\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": -5\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Duplicate lane id -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [\n    {\n      \"id\": 1,\n      \"origin\": \"Mumbai\",\n      \"destination\": \"Delhi\"\n    },\n    {\n      \"id\": 1,\n      \"origin\": \"Mumbai\",\n      \"destination\": \"Delhi\"\n    }\n  ],\n  \"transporters\": [\n    {\n      \"id\": 1,\n      \"name\": \"Transporter T1\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 100\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Duplicate transporter id -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [\n    {\n      \"id\": 1,\n      \"origin\": \"Mumbai\",\n      \"destination\": \"Delhi\"\n    }\n  ],\n  \"transporters\": [\n    {\n      \"id\": 1,\n      \"name\": \"Transporter T1\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 100\n        }\n      ]\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Transporter T1\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 90\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unknown laneId in quote -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [\n    {\n      \"id\": 1,\n      \"origin\": \"Mumbai\",\n      \"destination\": \"Delhi\"\n    }\n  ],\n  \"transporters\": [\n    {\n      \"id\": 1,\n      \"name\": \"Transporter T1\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 100\n        },\n        {\n          \"laneId\": 42,\n          \"quote\": 100\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Same lane quoted twice -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [\n    {\n      \"id\": 1,\n      \"origin\": \"Mumbai\",\n      \"destination\": \"Delhi\"\n    }\n  ],\n  \"transporters\": [\n    {\n      \"id\": 1,\n      \"name\": \"Transporter T1\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 100\n        },\n        {\n          \"laneId\": 1,\n          \"quote\": 90\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Lane without quotes -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });",
+                  "pm.test(\"lists lane 2\", () => pm.expect(pm.response.json().errors).to.include(\"Lane 2 has no quotes\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lanes\": [\n    {\n      \"id\": 1,\n      \"origin\": \"Mumbai\",\n      \"destination\": \"Delhi\"\n    },\n    {\n      \"id\": 2,\n      \"origin\": \"Mumbai\",\n      \"destination\": \"Delhi\"\n    }\n  ],\n  \"transporters\": [\n    {\n      \"id\": 1,\n      \"name\": \"Transporter T1\",\n      \"laneQuotes\": [\n        {\n          \"laneId\": 1,\n          \"quote\": 100\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Malformed JSON -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"lanes\": [",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/input",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "input"
+              ]
+            }
+          }
+        },
+        {
+          "name": "maxTransporters = 0 -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"error shape\", () => { const b = pm.response.json(); pm.expect(b.status).to.eql(\"error\"); pm.expect(b.message).to.be.a(\"string\"); pm.expect(b.timestamp).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxTransporters\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/transporters/assignment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transporters",
+                "assignment"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "lanes": [
+    {"id": 1, "origin": "Lane 1 Origin", "destination": "Lane 1 Destination"},
+    {"id": 2, "origin": "Lane 2 Origin", "destination": "Lane 2 Destination"},
+    {"id": 3, "origin": "Lane 3 Origin", "destination": "Lane 3 Destination"},
+    {"id": 4, "origin": "Lane 4 Origin", "destination": "Lane 4 Destination"},
+    {"id": 5, "origin": "Lane 5 Origin", "destination": "Lane 5 Destination"},
+    {"id": 6, "origin": "Lane 6 Origin", "destination": "Lane 6 Destination"},
+    {"id": 7, "origin": "Lane 7 Origin", "destination": "Lane 7 Destination"},
+    {"id": 8, "origin": "Lane 8 Origin", "destination": "Lane 8 Destination"},
+    {"id": 9, "origin": "Lane 9 Origin", "destination": "Lane 9 Destination"}
+  ],
+  "transporters": [
+    {"id": 1, "name": "T1", "laneQuotes": [{"laneId": 1, "quote": 20835}, {"laneId": 2, "quote": 10512}, {"laneId": 3, "quote": 22105}, {"laneId": 4, "quote": 42481}, {"laneId": 5, "quote": 19862}, {"laneId": 6, "quote": 13567}, {"laneId": 7, "quote": 10015}, {"laneId": 8, "quote": 17886}, {"laneId": 9, "quote": 43996}]},
+    {"id": 2, "name": "T2", "laneQuotes": [{"laneId": 1, "quote": 48844}, {"laneId": 2, "quote": 31326}, {"laneId": 3, "quote": 18640}, {"laneId": 4, "quote": 45828}, {"laneId": 5, "quote": 18297}, {"laneId": 6, "quote": 45810}, {"laneId": 7, "quote": 49573}, {"laneId": 8, "quote": 45122}, {"laneId": 9, "quote": 31856}]},
+    {"id": 3, "name": "T3", "laneQuotes": [{"laneId": 1, "quote": 39020}, {"laneId": 2, "quote": 20648}, {"laneId": 3, "quote": 31438}, {"laneId": 4, "quote": 36447}, {"laneId": 5, "quote": 12789}, {"laneId": 6, "quote": 49985}, {"laneId": 7, "quote": 35285}, {"laneId": 8, "quote": 10281}, {"laneId": 9, "quote": 40092}]},
+    {"id": 4, "name": "T4", "laneQuotes": [{"laneId": 1, "quote": 14400}, {"laneId": 2, "quote": 44514}, {"laneId": 3, "quote": 14316}, {"laneId": 4, "quote": 10678}, {"laneId": 5, "quote": 13032}, {"laneId": 6, "quote": 46024}, {"laneId": 7, "quote": 42342}, {"laneId": 8, "quote": 35742}, {"laneId": 9, "quote": 48921}]},
+    {"id": 5, "name": "T5", "laneQuotes": [{"laneId": 1, "quote": 11601}, {"laneId": 2, "quote": 19760}, {"laneId": 3, "quote": 40870}, {"laneId": 4, "quote": 20635}, {"laneId": 5, "quote": 26421}, {"laneId": 6, "quote": 28809}, {"laneId": 7, "quote": 27815}, {"laneId": 8, "quote": 17024}, {"laneId": 9, "quote": 44691}]},
+    {"id": 6, "name": "T6", "laneQuotes": [{"laneId": 1, "quote": 35095}, {"laneId": 2, "quote": 12494}, {"laneId": 3, "quote": 17808}, {"laneId": 4, "quote": 36210}, {"laneId": 5, "quote": 39444}, {"laneId": 6, "quote": 29948}, {"laneId": 7, "quote": 17320}, {"laneId": 8, "quote": 10492}, {"laneId": 9, "quote": 37864}]},
+    {"id": 7, "name": "T7", "laneQuotes": [{"laneId": 1, "quote": 26070}, {"laneId": 2, "quote": 41098}, {"laneId": 3, "quote": 20932}, {"laneId": 4, "quote": 16897}, {"laneId": 5, "quote": 27938}, {"laneId": 6, "quote": 43517}, {"laneId": 7, "quote": 25881}, {"laneId": 8, "quote": 46136}, {"laneId": 9, "quote": 31286}]}
+  ]
+}
